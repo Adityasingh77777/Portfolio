@@ -1,14 +1,13 @@
-const mongoose=require('mongoose')
-require('dotenv').config()
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-async function connectDB(){
-    try{
-        await mongoose.connect(processs.env.MONGODB);
-        console.log('Database connected Successfully')
-    }
-    catch(err){
-        console.log('Database Connection Failed')
-    }
-}
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connected Successfully');
+  } catch (err) {
+    console.error('Database Connection Failed:', err);
+  }
+};
 
-module.exports=connectDB
+module.exports = connectDB;
