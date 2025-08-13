@@ -51,4 +51,43 @@ const signup = async (req, res) => {
     }
 };
 
+
+const login = async(req,res)=>{
+    try{
+
+        const {email, password}= req.body;
+
+        if(!email || !password) return res.status(403).json({
+            message:"all fields should be filled"
+        })
+
+        const existingUser=await User.findOne({email});
+
+        if(!existingUser){
+            return res.status(404).json({
+                message:"User not found"
+            })
+        }
+
+        const match=await bcrypt.compare(password,existingUser.password);
+
+        if(!match){
+            return res.status(403).json({
+                message:"Password mismatched"
+            })
+        }
+
+         return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            user: existingUser // be careful: exclude password when sending user object in production
+        });
+
+    }
+    catch(err){
+        return res.status(500).json({
+            message:'login failed'
+        })
+    }
+}
 module.exports = {signup};
