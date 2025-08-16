@@ -90,4 +90,15 @@ const login = async(req,res)=>{
         })
     }
 }
+
+const logout= async(req,res)=>{
+    try{
+
+    }
+    catch(err){
+        return res.status(500).json({
+            message:"Log out Failed"
+        })
+    }
+}
 module.exports = {signup, login};
